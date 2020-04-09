@@ -89,7 +89,6 @@ function gutenberg_advantages_assets() { // phpcs:ignore
 // Hook: Block assets.
 add_action( 'init', 'gutenberg_advantages_assets' );
 
-
 //Add category to gutenberg components menu
 //Function name should be Unique for each category! 
 function my_blocks_plugin_block_advantages( $company ) {
