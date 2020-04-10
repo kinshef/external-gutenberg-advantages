@@ -15,8 +15,6 @@ const Controls = ({ attributes, setAttributes }) => {
     setLocalState({...localState, 'colAdvantages': [...numberToArrey(attributes.colAdvantages)] })
   }, [attributes.colAdvantages !== undefined])
 
-
-
   const getImgToState = (attribute, objectAttribute, objectAttribute2 ) => (
     <MediaUpload
       onSelect={e => {
@@ -32,7 +30,7 @@ const Controls = ({ attributes, setAttributes }) => {
         return <div>
           {attributes[objectAttribute] !== undefined && attributes[objectAttribute][attribute] !== undefined
             ? <img src={attributes[objectAttribute][attribute]} onClick={open} />
-            : <button onClick={open}>Добавить</button>}
+            : <Button isPrimary onClick={open}>Добавить иконку</Button>}
         </div>
       }}
     />
@@ -49,6 +47,7 @@ const Controls = ({ attributes, setAttributes }) => {
         onChange={text => setLocalState({...localState, [objectAttribute2]: { [attribute]: text}})}
       />
       <Button 
+        style={{marginRight: "0.5rem"}}
         isPrimary
         onClick={() => {
           objectAttribute && localState[objectAttribute2]
@@ -60,6 +59,16 @@ const Controls = ({ attributes, setAttributes }) => {
             : setAttributes({...attributes, [attribute]: localState[objectAttribute2][attribute]})
             setLocalState({...localState, [objectAttribute2]: {[attribute]: ''}})
         }}>Click</Button>
+      <Button 
+        isPrimary
+        onClick={() => {
+          var attr = { ...attributes, [objectAttribute]: {...attributes[objectAttribute], [objectAttribute2]: {...attributes[objectAttribute][objectAttribute2]}}};
+          delete attr[objectAttribute][objectAttribute2][attribute]
+          if(Object.keys(attr[objectAttribute][objectAttribute2]).length === 0) {
+            delete attr[objectAttribute][objectAttribute2]
+          }
+          setAttributes(attr)
+        }}>Delete</Button>
     </div>
   )
 
@@ -82,13 +91,26 @@ const Controls = ({ attributes, setAttributes }) => {
 
   let buildSection = localState.colAdvantages.map(e => {
     return <PanelBody title={__((e+1)+' Section')} initialOpen={true}>
-      <PanelRow>{getTextToState('Advantages Taitl:'+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesTaitl']
-        ? ' '+attributes.advantagesItems['section'+e]['advantagesTaitl']
-        : ' не введено'), null, 'advantagesTaitl', 'advantagesItems', 'section'+e)}</PanelRow>
-      <PanelRow>{getTextToState('Advantages Subtitle: '+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesSubtitle']
-        ? ' '+attributes.advantagesItems['section'+e]['advantagesSubtitle']
-        : ' не введено'), null, 'advantagesSubtitle', 'advantagesItems', 'section'+e)}</PanelRow>
+      <PanelRow>
+        {getTextToState('Advantages Taitl:'+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesTaitl']
+          ? ' '+attributes.advantagesItems['section'+e]['advantagesTaitl']
+          : ' не введено'), null, 'advantagesTaitl', 'advantagesItems', 'section'+e)}
+        </PanelRow>
+      <PanelRow>
+        {getTextToState('Advantages Subtitle: '+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesSubtitle']
+          ? ' '+attributes.advantagesItems['section'+e]['advantagesSubtitle']
+          : ' не введено'), null, 'advantagesSubtitle', 'advantagesItems', 'section'+e)}
+        </PanelRow>
       <PanelRow>{getImgToState('sectionImg', 'advantagesItems', 'section'+e)}</PanelRow>
+      <PanelRow>
+        <Button 
+          isPrimary
+          onClick={() => {
+            var attribute = { ...attributes, ['advantagesItems']: {...attributes['advantagesItems']}};
+            delete attribute.advantagesItems['section'+e]
+            setAttributes(attribute)
+        }}>Delete section</Button>
+      </PanelRow>
     </PanelBody>
   })
 
