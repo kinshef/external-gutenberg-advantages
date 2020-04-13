@@ -7,13 +7,14 @@ const {PanelBody,PanelRow,TextControl,CheckboxControl,SelectControl} = wp.compon
 
 const Controls = ({ attributes, setAttributes }) => {
 
+  let numberToArrey = (a) => {
+    var arr = [];
+    for(let i=0;i<a;i++){arr.push(i)}
+    return arr
+  }
   const [localState, setLocalState] = useState({
-    'colAdvantages': []
+    'colAdvantages': [...numberToArrey(attributes.colAdvantages)]
   })
-
-  useEffect( () => {
-    setLocalState({...localState, 'colAdvantages': [...numberToArrey(attributes.colAdvantages)] })
-  }, [attributes.colAdvantages !== undefined])
 
   const getImgToState = (attribute, objectAttribute, objectAttribute2 ) => (
     <MediaUpload
@@ -83,12 +84,6 @@ const Controls = ({ attributes, setAttributes }) => {
     </PanelRow>
   )
 
-  let numberToArrey = (a) => {
-    var arr = [];
-    for(let i=0;i<a;i++){arr.push(i)}
-    return arr
-  }
-
   let buildSection = localState.colAdvantages.map(e => {
     return <PanelBody title={__((e+1)+' Section')} initialOpen={true}>
       <PanelRow>
@@ -121,8 +116,6 @@ const Controls = ({ attributes, setAttributes }) => {
           <Button 
             isPrimary
             onClick={() => console.log(localState)}>localStateControls</Button>
-        </PanelRow>
-        <PanelRow>
           <Button 
             isPrimary
             onClick={() => console.log(attributes)}>State</Button>
@@ -140,21 +133,24 @@ const Controls = ({ attributes, setAttributes }) => {
             }}
           />
         </PanelRow>
-        <PanelRow>{getImgToState('bgImg')}</PanelRow>
         <PanelRow>
+          <TextControl
+            label='max Col To Row'
+            type="number"
+            value={attributes.maxColToRow}
+            onChange={text =>{
+              setAttributes({'maxColToRow': +text})
+            }}
+          />
+        </PanelRow>
+        {/* <PanelRow>{getImgToState('bgImg')}</PanelRow> */}
+        {/* <PanelRow>
           {getCheckboxControl(
             'bootstrapGrid',
             null,
             'bootstrapGrid'
           )}
-        </PanelRow>
-        <PanelRow>
-          {getCheckboxControl(
-            'bootstrapGridContainer',
-            null,
-            'bootstrapGridContainer'
-          )}
-        </PanelRow>
+        </PanelRow> */}
       </PanelBody>
       {buildSection}
     </InspectorControls>

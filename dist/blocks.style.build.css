@@ -4,6 +4,10 @@
  * Can include things like variables and mixins
  * that are used across the project.
 */
+.sectionImg-wrap img {
+  max-width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain; }
 /**
  * #.# Common SCSS
  *

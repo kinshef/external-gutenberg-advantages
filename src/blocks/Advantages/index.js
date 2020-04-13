@@ -17,13 +17,13 @@ registerBlockType('gutenberg-advantages/advantages', {
   attributes: {
     colAdvantages: {
       type: 'number',
+      default: 3,
+    },
+    maxColToRow: {
+      type: 'number',
       default: 2,
     },
     bootstrapGrid: {
-      type: 'bool',
-      default: true,
-    },
-    bootstrapGridContainer: {
       type: 'bool',
       default: true,
     },
@@ -36,35 +36,36 @@ registerBlockType('gutenberg-advantages/advantages', {
   edit: ({ attributes, setAttributes }) => (
     <Fragment>
       <Controls attributes={attributes} setAttributes={setAttributes} />
-      <Card.BootstrapContainer bootstrapGridContainer={attributes.bootstrapGridContainer}>
-        {Object.keys(attributes.advantagesItems).length
-          ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
+      <section ib='section_advantages' className='section_advantages text-center'>
+        <Card.BootstrapContainer bootstrapGridContainer={attributes.bootstrapGridContainer}>
+          <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
+            <Card.BootstrapCol bootstrapGrid={attributes.bootstrapGrid}>
               <InnerBlocks />
-              <Card.buildSection advantagesItems={attributes.advantagesItems} advantagesItemString ='advantagesTaitl'/>
-              <Card.buildSection advantagesItems={attributes.advantagesItems} advantagesItemString ='advantagesSubtitle'/>
-              <Card.buildSection advantagesItems={attributes.advantagesItems} advantagesItemString ='sectionImg' booleanImg={true}/>
-            </Card.BootstrapRow>
-          : <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
-              <InnerBlocks />
-              <div className='col'>Заполните хотя-бы одну секцию</div>
-            </Card.BootstrapRow>}
-      </Card.BootstrapContainer>
+            </Card.BootstrapCol>
+          </Card.BootstrapRow>
+          {Object.keys(attributes.advantagesItems).length
+            ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
+                <Card.BuildSectionCol advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
+              </Card.BootstrapRow>
+            : <div>Заполните хотя-бы одну секцию</div>}
+        </Card.BootstrapContainer>
+      </section>
     </Fragment>
   ),
   save: ({ attributes }) => (
-    <Card.BootstrapContainer bootstrapGridContainer={attributes.bootstrapGridContainer}>
-      {Object.keys(attributes.advantagesItems).length
-        ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
+    <section ib='section_advantages' className='section_advantages text-center'>
+      <Card.BootstrapContainer bootstrapGridContainer={attributes.bootstrapGridContainer}>
+        <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
+          <Card.BootstrapCol bootstrapGrid={attributes.bootstrapGrid}>
             <InnerBlocks.Content />
-            <Card.buildSection advantagesItems={attributes.advantagesItems} advantagesItemString ='advantagesTaitl'/>
-            <Card.buildSection advantagesItems={attributes.advantagesItems} advantagesItemString ='advantagesSubtitle'/>
-            <Card.buildSection advantagesItems={attributes.advantagesItems} advantagesItemString ='sectionImg' booleanImg={true}/>
-          </Card.BootstrapRow>
-        : <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
-            <InnerBlocks />
-            <div className='col'>Заполните хотя-бы одну секцию</div>
-          </Card.BootstrapRow>}
-      
-    </Card.BootstrapContainer>
+          </Card.BootstrapCol>
+        </Card.BootstrapRow>
+        {Object.keys(attributes.advantagesItems).length
+          ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
+              <Card.BuildSectionCol advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
+            </Card.BootstrapRow>
+          : <div>Заполните хотя-бы одну секцию</div>}
+      </Card.BootstrapContainer>
+    </section>
   ),
 })
