@@ -16,44 +16,49 @@ const Card = ({ data, className }) => {
 		display
 	} = data;
 
-	
-
 	var validationHex = function(a){
-		return a[0] === '#' ? a : "#"+a;
+		return a[0] === '#' 
+			? a 
+			: "#"+a;
 	}
-	var MPValidation = function(mp, validation) {
-		if(mp && validation === 'true'){
-			var a = mp.split(' ').map(e => {
+	var MPValidation = function(value, validation) {
+		if(value && validation){
+			var a = value.split(' ').map(e => {
 				if(Number.isNaN(parseFloat(e)) !== Number.isNaN(NaN)){
 					return parseFloat(e)+'px ';
 				}
 			}).join('');
 			return  a;
 		}else{
-			return mp;
+			return value;
 		}
 	}
-	var checkValue = function(value,what) {
-		return background.validation == what ? value : '';
-	}
 
-	
-	
 	return (
 		<div className={className}>
-			<div style={{
-				backgroundColor: checkValue(validationHex(background.bgColor), 'color'),
-				backgroundImage: `url('${checkValue(background.bgImg, 'img')}')`,
-				fontSize: fontSize+"px", 
-				color: validationHex(fontColor), 
-				fontWeight: fontWeight,
-				lineHeight: lineHeight,
-				letterSpacing: letterSpacing+"px",
-				margin: MPValidation(margin.margin, margin.validation),
-				padding: MPValidation(padding.padding, padding.validation),
-				fontStyle: fontStyle,
-				display: display,
-			}}>{textTaitl}</div>
+			<div 
+				style={{
+					margin: MPValidation(margin.margin, margin.validation),
+					padding: MPValidation(padding.padding, padding.validation),
+					backgroundColor: (
+						background.validation == 'color'
+							? validationHex(background.bgColor)
+							: ''
+					),
+					backgroundImage: `url('${(
+						background.validation == 'img'
+							? background.bgImg
+							: ''
+					)}')`,
+					color: validationHex(fontColor),
+					fontSize: fontSize+"px", 
+					fontWeight: fontWeight,
+					lineHeight: lineHeight,
+					letterSpacing: letterSpacing+"px",
+					fontStyle: fontStyle,
+					display: display,
+				}}
+			>{textTaitl}</div>
 		</div>
 	);
 };

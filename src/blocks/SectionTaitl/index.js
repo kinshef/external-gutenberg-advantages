@@ -54,14 +54,14 @@ registerBlockType('gutenberg-advantages/section-taitl', {
       type: 'object',
       default: {
         margin: '0px',
-        validation: 'true',
+        validation: true,
       },
     },
     padding: {
       type: 'object',
       default: {
         padding: '0px',
-        validation: 'false',
+        validation: false,
       },
     },
     display: {
