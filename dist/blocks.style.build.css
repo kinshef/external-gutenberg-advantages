@@ -8,6 +8,10 @@
   max-width: 100%;
   -o-object-fit: contain;
      object-fit: contain; }
+
+.advantagesIcon-wrap span {
+  font-size: 4rem;
+  display: initial; }
 /**
  * #.# Common SCSS
  *

@@ -15,6 +15,10 @@ registerBlockType('gutenberg-advantages/advantages', {
   category: 'Guttenberg Advantages', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
   keywords: [__('Advantages')],
   attributes: {
+    imgAndIcon: {
+      type: 'string',
+      default: 'ICON',
+    },
     colAdvantages: {
       type: 'number',
       default: 3,
@@ -45,7 +49,7 @@ registerBlockType('gutenberg-advantages/advantages', {
           </Card.BootstrapRow>
           {Object.keys(attributes.advantagesItems).length
             ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
-                <Card.BuildSectionCol advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
+                <Card.BuildSectionCol imgAndIcon={attributes.imgAndIcon} advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
               </Card.BootstrapRow>
             : <div>Заполните хотя-бы одну секцию</div>}
         </Card.BootstrapContainer>

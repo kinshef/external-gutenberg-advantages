@@ -9,7 +9,6 @@ const BootstrapContainer = ({ children, bootstrapGrid }) => {
 		return children
 	}
 }
-
 const BootstrapRow = ({ children, bootstrapGrid }) => {
 	if(bootstrapGrid){
 		return <div className='row'>
@@ -19,7 +18,6 @@ const BootstrapRow = ({ children, bootstrapGrid }) => {
 		return children
 	}
 }
-
 const BootstrapCol = ({ children, bootstrapGrid }) => {
 	if(bootstrapGrid){
 		return <div className='col'>
@@ -31,50 +29,38 @@ const BootstrapCol = ({ children, bootstrapGrid }) => {
 }
 
 
-
-// const buildSectionCol = ({ advantagesItems, maxColToRow, advantagesItemString, booleanImg }) => {
-// 	return Object.keys(advantagesItems).map(e => {
-// 		return <div className='col' style={{minWidth: Math.round(100/maxColToRow)+'%'}}>
-// 		{Object.keys(advantagesItems[e]).map(i => {
-// 			if(i === advantagesItemString){
-// 				if(booleanImg){
-// 					return <div className={i+'-wrap'}>
-// 						<img src={advantagesItems[e][i]}></img>
-// 					</div>
-// 				}else{
-// 					return <div className={i}>
-// 						{advantagesItems[e][i]}
-// 					</div>
-// 				}
-// 			}
-// 		})}
-// 		</div>
-// 	})
-// }
-
-
-const BuildSectionContent = ({ activeItem, advantagesItemString, booleanImg }) => {
+const BuildSectionContent = ({ activeItem, advantagesItemString, type }) => {
 	return Object.keys(activeItem).map(i => {
 		if(i === advantagesItemString){
-			if(booleanImg){
-				return <div className={i+'-wrap'}>
-					<img src={activeItem[i]}></img>
-				</div>
-			}else{
-				return <div className={i}>
-					{activeItem[i]}
-				</div>
+			switch(type) {
+				case 'text':
+					return <div className={i}>
+						{activeItem[i]}
+					</div>
+				case 'img':
+					return <div className={i+'-wrap'}>
+						<img src={activeItem[i]}></img>
+					</div>
+				case 'icon':
+					return <div className={i+'-wrap'}>
+						<span class={"dashicons dashicons-"+activeItem[i]}></span>
+					</div>
+				default:
+					return <div> Error </div>
 			}
 		}
 	})
 }
 
-const BuildSectionCol = ({ advantagesItems, maxColToRow }) => {
+const BuildSectionCol = ({ advantagesItems, maxColToRow, imgAndIcon }) => {
 	return Object.keys(advantagesItems).map( e => {
 		return <div className='col' style={{minWidth: Math.round(100/maxColToRow)+'%'}}>
-			<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesTaitl'/>
-			<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesSubtitle'/>
-			<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='sectionImg' booleanImg/>
+			<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesTaitl' type='text'/>
+			<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesSubtitle' type='text'/>
+			{imgAndIcon === 'IMG'
+				? <BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='sectionImg' type='img'/>
+				: <BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesIcon' type='icon'/>
+			}
 		</div>
 	})
 }

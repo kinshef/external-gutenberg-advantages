@@ -1,8 +1,8 @@
 const { __ } = wp.i18n
 const { InspectorControls, MediaUpload } = wp.blockEditor
-const {useState, useEffect} = wp.element
-import { Button } from "@wordpress/components";
-const {PanelBody,PanelRow,TextControl,CheckboxControl,SelectControl} = wp.components
+const {useState} = wp.element
+import { Button, RadioControl } from "@wordpress/components";
+const {PanelBody, PanelRow, TextControl, CheckboxControl, SelectControl} = wp.components
 
 
 const Controls = ({ attributes, setAttributes }) => {
@@ -15,6 +15,39 @@ const Controls = ({ attributes, setAttributes }) => {
   const [localState, setLocalState] = useState({
     'colAdvantages': [...numberToArrey(attributes.colAdvantages)]
   })
+
+  const stringToBoolean = (str) => {
+    if(str === 'true') {return true}
+    if(str === 'false') {return false}
+  }
+
+
+  const getCheckboxControl = (label, help, attribute) => (
+    <PanelRow>
+      <CheckboxControl
+        label={label}
+        help={help}
+        checked={attributes[attribute]}
+        onChange={e => setAttributes({ [attribute]: !attributes[attribute] })}
+      />
+    </PanelRow>
+  )
+  const getRadioControl = (label, help, options, attribute, boolean ) => (
+    <PanelRow>
+      <RadioControl
+        label={label}
+        help={help}
+        selected={ attributes[attribute] }
+        options={options}
+        onChange={ val => {
+          boolean
+            ? setAttributes({ [attribute]: stringToBoolean(val) })
+            : setAttributes({ [attribute]: val })
+        } }
+      />
+    </PanelRow>
+  )
+
 
   const getImgToState = (attribute, objectAttribute, objectAttribute2 ) => (
     <MediaUpload
@@ -73,30 +106,34 @@ const Controls = ({ attributes, setAttributes }) => {
     </div>
   )
 
-  const getCheckboxControl = (label, help, attribute) => (
-    <PanelRow>
-      <CheckboxControl
-        label={label}
-        help={help}
-        checked={attributes[attribute]}
-        onChange={e => setAttributes({ [attribute]: !attributes[attribute] })}
-      />
-    </PanelRow>
-  )
-
   let buildSection = localState.colAdvantages.map(e => {
     return <PanelBody title={__((e+1)+' Section')} initialOpen={true}>
       <PanelRow>
         {getTextToState('Advantages Taitl:'+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesTaitl']
           ? ' '+attributes.advantagesItems['section'+e]['advantagesTaitl']
           : ' не введено'), null, 'advantagesTaitl', 'advantagesItems', 'section'+e)}
-        </PanelRow>
+      </PanelRow>
       <PanelRow>
         {getTextToState('Advantages Subtitle: '+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesSubtitle']
           ? ' '+attributes.advantagesItems['section'+e]['advantagesSubtitle']
           : ' не введено'), null, 'advantagesSubtitle', 'advantagesItems', 'section'+e)}
-        </PanelRow>
-      <PanelRow>{getImgToState('sectionImg', 'advantagesItems', 'section'+e)}</PanelRow>
+      </PanelRow>
+      {getRadioControl('imgAndIcon', null, [
+            { label: 'IMF', value: 'IMG' },
+            { label: 'Icon', value: 'ICON' },
+          ], 'imgAndIcon')}
+      <PanelRow>
+        {attributes.imgAndIcon === 'IMG'
+          ? getImgToState('sectionImg', 'advantagesItems', 'section'+e)
+          : getTextToState(
+            <span>Advantages Icon: {
+              (attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesIcon']
+                ? <span className={'dashicons dashicons-' + attributes.advantagesItems['section'+e]['advantagesIcon']}></span>
+                : <span> не введено</span>
+              )
+            }</span>, <a target="_blank" href='https://developer.wordpress.org/resource/dashicons/'>Icon</a>, 'advantagesIcon', 'advantagesItems', 'section'+e)
+        }
+      </PanelRow>
       <PanelRow>
         <Button 
           isPrimary
@@ -121,6 +158,7 @@ const Controls = ({ attributes, setAttributes }) => {
             onClick={() => console.log(attributes)}>State</Button>
         </PanelRow>
       </PanelBody>
+
       <PanelBody title={__('main')} initialOpen={true}>
         <PanelRow>
           <TextControl
@@ -143,14 +181,6 @@ const Controls = ({ attributes, setAttributes }) => {
             }}
           />
         </PanelRow>
-        {/* <PanelRow>{getImgToState('bgImg')}</PanelRow> */}
-        {/* <PanelRow>
-          {getCheckboxControl(
-            'bootstrapGrid',
-            null,
-            'bootstrapGrid'
-          )}
-        </PanelRow> */}
       </PanelBody>
       {buildSection}
     </InspectorControls>
