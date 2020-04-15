@@ -1,10 +1,13 @@
 // Import external components
-import Card from './components/Card'
+import { Card } from './components/Card'
 import Controls from './components/Controls'
 
 const { __ } = wp.i18n // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks // Import registerBlockType() from wp.blocks
 import { Fragment } from '@wordpress/element'
+const { InnerBlocks } = wp.blockEditor
+
+
 
 registerBlockType('gutenberg-advantages/section-taitl', {
   // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
@@ -57,6 +60,10 @@ registerBlockType('gutenberg-advantages/section-taitl', {
         validation: true,
       },
     },
+    innerBlock: {
+      type: 'boolean',
+      default: false,
+    },
     padding: {
       type: 'object',
       default: {
@@ -83,19 +90,50 @@ registerBlockType('gutenberg-advantages/section-taitl', {
   edit: ({ attributes, setAttributes, className}) => (
     <Fragment>
       <Controls attributes={attributes} setAttributes={setAttributes} />
-      <Card
-        additionalClasses={attributes.className ? attributes.className : ''}
-        data={attributes}
-        preventClick={true}
-        className= {className}
-      />
+      <div additionalClasses={attributes.className ? attributes.className : ''} className= {className} preventClick={true}>
+        <link href={attributes.fontFamily.fontFamilyUrl} rel="stylesheet"></link>
+        <Card.TitleBlock 
+          textTaitl={attributes.textTaitl}
+          fontColor={attributes.fontColor}
+          fontWeight={attributes.fontWeight}
+          lineHeight={attributes.lineHeight}
+          letterSpacing={attributes.letterSpacing}
+          fontStyle={attributes.fontStyle}
+          fontSize={attributes.fontSize}
+          margin={attributes.margin}
+          padding={attributes.padding}
+          background={attributes.background}
+          textAlign={attributes.textAlign}
+          display={attributes.display}
+          fontFamily={attributes.fontFamily}
+        />
+        {attributes.innerBlock
+          ? <InnerBlocks />
+          : null}
+      </div>
     </Fragment>
   ),
   save: ({ attributes, className}) => (
-    <Card
-      additionalClasses={attributes.className ? attributes.className : ''}
-      data={attributes}
-      className= {className}
-    />
+    <div additionalClasses={attributes.className ? attributes.className : ''} className= {className}>
+      <link href={attributes.fontFamily.fontFamilyUrl} rel="stylesheet"></link>
+      <Card.TitleBlock 
+        textTaitl={attributes.textTaitl}
+        fontColor={attributes.fontColor}
+        fontWeight={attributes.fontWeight}
+        lineHeight={attributes.lineHeight}
+        letterSpacing={attributes.letterSpacing}
+        fontStyle={attributes.fontStyle}
+        fontSize={attributes.fontSize}
+        margin={attributes.margin}
+        padding={attributes.padding}
+        background={attributes.background}
+        textAlign={attributes.textAlign}
+        display={attributes.display}
+        fontFamily={attributes.fontFamily}
+      />
+      {attributes.innerBlock
+        ? <InnerBlocks.Content />
+        : null}
+    </div>
   ),
 })

@@ -114,6 +114,17 @@ const Controls = ({ attributes, setAttributes, className}) => {
             onClick={() => console.log(localState)}>localState</Button>
         </PanelRow>
       </PanelBody>
+      <PanelBody title={__('Текст')} initialOpen={true}>
+        <PanelRow>
+          <TextControl
+            type='text'
+            label='bg validation:'
+            value={attributes.textTaitl}
+            onChange={e => setAttributes({'textTaitl': e})}
+          />
+        </PanelRow>
+        {getCheckboxControl('текст снизу', null, 'innerBlock')}
+      </PanelBody>
       <PanelBody title={__('Импорт шрифтов(Google)')} initialOpen={true}>
         {getTextToState('font family Url: '+ attributes.fontFamily.fontFamilyUrl,
           'Пример: https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
@@ -144,16 +155,6 @@ const Controls = ({ attributes, setAttributes, className}) => {
               }}
             />
         }
-      </PanelBody>
-      <PanelBody title={__('Текст')} initialOpen={true}>
-        <PanelRow>
-          <TextControl
-            type='text'
-            label='bg validation:'
-            value={attributes.textTaitl}
-            onChange={e => setAttributes({'textTaitl': e})}
-          />
-        </PanelRow>
       </PanelBody>
       <PanelBody title={__('Параметры текста')} initialOpen={true}>
         <PanelRow>
