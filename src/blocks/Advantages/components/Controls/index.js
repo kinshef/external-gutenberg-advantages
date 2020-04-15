@@ -21,7 +21,6 @@ const Controls = ({ attributes, setAttributes }) => {
     if(str === 'false') {return false}
   }
 
-
   const getCheckboxControl = (label, help, attribute) => (
     <PanelRow>
       <CheckboxControl
@@ -48,7 +47,6 @@ const Controls = ({ attributes, setAttributes }) => {
     </PanelRow>
   )
 
-
   const getImgToState = (attribute, objectAttribute, objectAttribute2 ) => (
     <MediaUpload
       onSelect={e => {
@@ -70,7 +68,7 @@ const Controls = ({ attributes, setAttributes }) => {
     />
   )
 
-  const getTextToState = (label, help, attribute, objectAttribute, objectAttribute2) => (
+  const getTextToStateTwoObject = (label, help, attribute, objectAttribute, objectAttribute2) => (
     <div>
       <TextControl
         label={label}
@@ -84,14 +82,10 @@ const Controls = ({ attributes, setAttributes }) => {
         style={{marginRight: "0.5rem"}}
         isPrimary
         onClick={() => {
-          objectAttribute && localState[objectAttribute2]
-            ? objectAttribute2
-              ? attributes[objectAttribute] && attributes[objectAttribute][objectAttribute2]
-                ? setAttributes({ [objectAttribute]: { ...attributes[objectAttribute], [objectAttribute2]: {...attributes[objectAttribute][objectAttribute2], [attribute]: localState[objectAttribute2][attribute]} }})
-                : setAttributes({ [objectAttribute]: { ...attributes[objectAttribute], [objectAttribute2]: {[attribute]: localState[objectAttribute2][attribute]} }})
-              : setAttributes({ [objectAttribute]: {...attributes[objectAttribute], [attribute]: localState[objectAttribute2][attribute]}})
-            : setAttributes({...attributes, [attribute]: localState[objectAttribute2][attribute]})
-            setLocalState({...localState, [objectAttribute2]: {[attribute]: ''}})
+          localState[objectAttribute2]
+            ? setAttributes({...attributes, [objectAttribute]: { ...attributes[objectAttribute], [objectAttribute2]: {...attributes[objectAttribute][objectAttribute2], [attribute]: localState[objectAttribute2][attribute] } }})
+            : null
+          setLocalState({...localState, [objectAttribute2]: {[attribute]: ''}})
         }}>Click</Button>
       <Button 
         isPrimary
@@ -109,12 +103,12 @@ const Controls = ({ attributes, setAttributes }) => {
   let buildSection = localState.colAdvantages.map(e => {
     return <PanelBody title={__((e+1)+' Section')} initialOpen={true}>
       <PanelRow>
-        {getTextToState('Advantages Taitl:'+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesTaitl']
+        {getTextToStateTwoObject('Advantages Taitl:'+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesTaitl']
           ? ' '+attributes.advantagesItems['section'+e]['advantagesTaitl']
           : ' не введено'), null, 'advantagesTaitl', 'advantagesItems', 'section'+e)}
       </PanelRow>
       <PanelRow>
-        {getTextToState('Advantages Subtitle: '+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesSubtitle']
+        {getTextToStateTwoObject('Advantages Subtitle: '+(attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesSubtitle']
           ? ' '+attributes.advantagesItems['section'+e]['advantagesSubtitle']
           : ' не введено'), null, 'advantagesSubtitle', 'advantagesItems', 'section'+e)}
       </PanelRow>
@@ -125,7 +119,7 @@ const Controls = ({ attributes, setAttributes }) => {
       <PanelRow>
         {attributes.imgAndIcon === 'IMG'
           ? getImgToState('sectionImg', 'advantagesItems', 'section'+e)
-          : getTextToState(
+          : getTextToStateTwoObject(
             <span>Advantages Icon: {
               (attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesIcon']
                 ? <span className={'dashicons dashicons-' + attributes.advantagesItems['section'+e]['advantagesIcon']}></span>

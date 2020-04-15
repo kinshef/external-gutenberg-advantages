@@ -37,11 +37,15 @@ registerBlockType('gutenberg-advantages/advantages', {
     },
   },
   
-  edit: ({ attributes, setAttributes }) => (
+  edit: ({ attributes, setAttributes, className }) => (
     <Fragment>
       <Controls attributes={attributes} setAttributes={setAttributes} />
-      <section ib='section_advantages' className='section_advantages text-center'>
-        <Card.BootstrapContainer bootstrapGridContainer={attributes.bootstrapGridContainer}>
+      <section ib='section_advantages' 
+        additionalClasses={attributes.className ? attributes.className : ''} 
+        className= {className+' section_advantages text-center'}
+        preventClick={true}
+      >
+        <Card.BootstrapContainer bootstrapGrid={attributes.bootstrapGrid}>
           <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
             <Card.BootstrapCol bootstrapGrid={attributes.bootstrapGrid}>
               <InnerBlocks />
@@ -56,9 +60,12 @@ registerBlockType('gutenberg-advantages/advantages', {
       </section>
     </Fragment>
   ),
-  save: ({ attributes }) => (
-    <section ib='section_advantages' className='section_advantages text-center'>
-      <Card.BootstrapContainer bootstrapGridContainer={attributes.bootstrapGridContainer}>
+  save: ({ attributes, className }) => (
+    <section ib='section_advantages'
+      additionalClasses={attributes.className ? attributes.className : ''}
+      className= {className+' section_advantages text-center'}
+    >
+      <Card.BootstrapContainer bootstrapGrid={attributes.bootstrapGrid}>
         <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
           <Card.BootstrapCol bootstrapGrid={attributes.bootstrapGrid}>
             <InnerBlocks.Content />
