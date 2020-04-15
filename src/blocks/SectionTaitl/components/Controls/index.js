@@ -1,8 +1,11 @@
 const { __ } = wp.i18n
 const { InspectorControls, MediaUpload } = wp.blockEditor
 const { PanelBody, PanelRow, RadioControl, Button, TextControl, RangeControl, CheckboxControl } = wp.components
+const {useState} = wp.element
 
 const Controls = ({ attributes, setAttributes, className}) => {
+
+  const [localState, setLocalState] = useState({})
 
   const getCheckboxControl = (label, help, attribute, twoObject) => (
     <PanelRow>
@@ -14,7 +17,6 @@ const Controls = ({ attributes, setAttributes, className}) => {
             ? attributes[twoObject][attribute]
             : attributes[attribute]
         }
-        onChange={e => setAttributes({ [attribute]: !attributes[attribute] })}
         onChange={ val => {
           twoObject
             ? setAttributes({ [twoObject]: { ...attributes[twoObject], [attribute]: !attributes[twoObject][attribute]}})
@@ -58,6 +60,48 @@ const Controls = ({ attributes, setAttributes, className}) => {
     })
   }
 
+  const getTextToState = (label, help, btn, key, object) => (
+    <div>
+      <TextControl
+        label={label}
+        help={help}
+        value={
+          object && localState[object]
+            ? localState[object][key]
+            : localState[key]
+        }
+        onChange={text => {
+          object
+            ? setLocalState({...localState, [object]: { ...localState[object], [key]: text }})
+            : setLocalState({...localState, [key]: text})
+        }}
+      />
+      <Button 
+        style={{marginRight: "0.5rem"}}
+        isPrimary
+        onClick={() => {
+          object && localState[object]
+            ? [setAttributes({...attributes, [object]: {...attributes[object], [key]: localState[object][key]}}),
+              setLocalState({...attributes, [object]: {...attributes[object], [key]: ''}})]
+            : [setAttributes({...attributes, [key]: localState[key]}),
+              setLocalState({...localState, [key]: ''})]
+        }}>Click</Button>
+      {btn
+        ? <Button 
+            isPrimary
+            onClick={() => {
+              let attr = {...attributes}
+              {object
+                ? delete attr[object][key]
+                : delete attr[key]
+              }
+              setAttributes(attr)
+            }}>Delete</Button>
+        : null}
+    </div>
+  )
+
+
   return (
     <InspectorControls className={className}>
       <PanelBody title={__('dev')} initialOpen={true}>
@@ -65,7 +109,19 @@ const Controls = ({ attributes, setAttributes, className}) => {
           <Button 
             isPrimary
             onClick={() => console.log(attributes)}>State</Button>
+          <Button 
+            isPrimary
+            onClick={() => console.log(localState)}>localState</Button>
         </PanelRow>
+      </PanelBody>
+      <PanelBody title={__('Импорт шрифтов(Google)')} initialOpen={true}>
+        {getTextToState('font family Url: '+ attributes.fontFamily.fontFamilyUrl,
+          'Пример: https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+          false, 'fontFamily', 'fontFamilyUrl'
+        )}
+        {getTextToState('font family Name: '+ attributes.fontFamily.fontFamilyName,
+          'Пример: Roboto', false, 'fontFamily', 'fontFamilyName'
+        )}
       </PanelBody>
       <PanelBody title={__('Задний фон')} initialOpen={true}>
         {getRadioControl('bg validation: ', null, [
@@ -84,7 +140,7 @@ const Controls = ({ attributes, setAttributes, className}) => {
               render={({ open }) => {
                 return attributes.background.bgImg
                   ? <img src={attributes.background.bgImg} onClick={open} />
-                  : <button onClick={open}>Добавить</button>
+                  : <Button isPrimary onClick={open}>Добавить</Button>
               }}
             />
         }
@@ -124,7 +180,7 @@ const Controls = ({ attributes, setAttributes, className}) => {
             max={900}
             step={100}
             name="font-weight"
-            value={attributes.fontWeight}
+            value={+attributes.fontWeight}
             onChange={ e => setAttributes({'fontWeight': e}) }
           />
         </PanelRow>
@@ -178,6 +234,13 @@ const Controls = ({ attributes, setAttributes, className}) => {
           { label: 'inline-block', value: 'inline-block' },
           { label: 'none', value: 'none' },
         ], 'display')}
+      </PanelBody>
+      <PanelBody title={__('Выравнивание по горизонтали')} initialOpen={true}>
+        {getRadioControl('text-align:', null, [
+          { label: 'left', value: 'left' },
+          { label: 'center', value: 'center' },
+          { label: 'right', value: 'right' },
+        ], 'textAlign')}
       </PanelBody>
     </InspectorControls>
   )

@@ -13,7 +13,9 @@ const Card = ({ data, className }) => {
 		margin,
 		padding,
 		background,
-		display
+		textAlign,
+		display,
+		fontFamily
 	} = data;
 
 	var validationHex = function(a){
@@ -36,8 +38,10 @@ const Card = ({ data, className }) => {
 
 	return (
 		<div className={className}>
+			<link href={fontFamily.fontFamilyUrl} rel="stylesheet"></link>
 			<div 
 				style={{
+					fontFamily: `"${fontFamily.fontFamilyName}", sans-serif`,
 					margin: MPValidation(margin.margin, margin.validation),
 					padding: MPValidation(padding.padding, padding.validation),
 					backgroundColor: (
@@ -57,6 +61,7 @@ const Card = ({ data, className }) => {
 					letterSpacing: letterSpacing+"px",
 					fontStyle: fontStyle,
 					display: display,
+					textAlign: textAlign,
 				}}
 			>{textTaitl}</div>
 		</div>

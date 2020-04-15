@@ -39,7 +39,7 @@ registerBlockType('gutenberg-advantages/section-taitl', {
     },
     fontWeight: {
       type: 'number',
-      default: '400',
+      default: '100',
     },
     background: {
       type: 'object',
@@ -64,9 +64,20 @@ registerBlockType('gutenberg-advantages/section-taitl', {
         validation: false,
       },
     },
+    fontFamily: {
+      type: 'object',
+      default: {
+        fontFamilyUrl: 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+        fontFamilyName: 'Roboto',
+      },
+    },
     display: {
-      type: 'text',
+      type: 'string',
       default:  'block',
+    },
+    textAlign: {
+      type: 'string',
+      default:  'left',
     },
   },
   edit: ({ attributes, setAttributes, className}) => (
