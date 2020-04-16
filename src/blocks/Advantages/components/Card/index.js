@@ -1,5 +1,4 @@
 import { Fragment } from "@wordpress/element";
-import './style.scss';
 
 
 const BootstrapContainer = ({ children, bootstrapGrid }) => {
@@ -55,12 +54,14 @@ const BuildSectionContent = ({ activeItem, advantagesItemString, type }) => {
 const BuildSectionCol = ({ advantagesItems, maxColToRow, imgAndIcon }) => {
 	return Object.keys(advantagesItems).map( e => {
 		return <div className='col' style={{minWidth: Math.round(100/maxColToRow)+'%'}}>
-			<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesTaitl' type='text'/>
-			<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesSubtitle' type='text'/>
-			{imgAndIcon === 'IMG'
-				? <BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='sectionImg' type='img'/>
-				: <BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesIcon' type='icon'/>
-			}
+			<div className='advantages-item'>
+				<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesTaitl' type='text'/>
+				<BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesSubtitle' type='text'/>
+				{imgAndIcon === 'IMG'
+					? <BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='sectionImg' type='img'/>
+					: <BuildSectionContent activeItem={advantagesItems[e]} advantagesItemString ='advantagesIcon' type='icon'/>
+				}
+			</div>
 		</div>
 	})
 }

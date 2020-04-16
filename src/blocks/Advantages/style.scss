@@ -1,0 +1,28 @@
+.section_advantages{
+    background-color: #fcfcfc;
+}
+
+.advantages-item{
+    box-shadow: 1px 1.732px 7.68px 0.32px rgba(21, 19, 16, 0.03);
+    margin: 1rem 0;
+    padding: 2rem;
+}
+.advantages-item:hover{
+    box-shadow: 1.5px 2.598px 11.28px 0.72px rgba(158, 109, 54, 0.2);
+}
+
+.advantages-item img{
+    max-width: 100%;
+    object-fit: contain;
+}
+.advantages-item span{
+    font-size: 5rem;
+    padding: 2rem;
+    box-shadow: 1px 1.732px 7.68px 0.32px rgba(21, 19, 16, 0.03);
+    display: inline-table;
+    transition: all 0.3s ease-out 0.1s;
+}
+.advantages-item:hover span{
+    box-shadow: 1.5px 2.598px 11.28px 0.72px rgba(158, 109, 54, 0.2);
+    transform: scaleX(-1);
+}

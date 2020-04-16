@@ -1,6 +1,8 @@
 // Import external components
 import Controls from './components/Controls'
 import { Card } from './components/Card'
+import './style.scss';
+
 
 const { __ } = wp.i18n // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks // Import registerBlockType() from wp.blocks
@@ -52,10 +54,10 @@ registerBlockType('gutenberg-advantages/advantages', {
             </Card.BootstrapCol>
           </Card.BootstrapRow>
           {Object.keys(attributes.advantagesItems).length
-            ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
-                <Card.BuildSectionCol imgAndIcon={attributes.imgAndIcon} advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
-              </Card.BootstrapRow>
-            : <div>Заполните хотя-бы одну секцию</div>}
+          ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
+              <Card.BuildSectionCol imgAndIcon={attributes.imgAndIcon} advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
+            </Card.BootstrapRow>
+          : <div>Заполните хотя-бы одну секцию</div>}
         </Card.BootstrapContainer>
       </section>
     </Fragment>
