@@ -5,7 +5,12 @@
  * that are used across the project.
 */
 .section_advantages {
-  background-color: #fcfcfc; }
+  background-color: #fcfcfc;
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
+
+.advantagesSubtitle {
+  margin: 0.5rem 0; }
 
 .advantages-item {
   -webkit-box-shadow: 1px 1.732px 7.68px 0.32px rgba(21, 19, 16, 0.03);

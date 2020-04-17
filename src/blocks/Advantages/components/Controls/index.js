@@ -16,11 +16,6 @@ const Controls = ({ attributes, setAttributes }) => {
     'colAdvantages': [...numberToArrey(attributes.colAdvantages)]
   })
 
-  const stringToBoolean = (str) => {
-    if(str === 'true') {return true}
-    if(str === 'false') {return false}
-  }
-
   const getCheckboxControl = (label, help, attribute, twoObject) => (
     <PanelRow>
       <CheckboxControl

@@ -42,7 +42,7 @@ registerBlockType('gutenberg-advantages/advantages', {
   edit: ({ attributes, setAttributes, className }) => (
     <Fragment>
       <Controls attributes={attributes} setAttributes={setAttributes} />
-      <section ib='section_advantages' 
+      <section id='section_advantages' 
         additionalClasses={attributes.className ? attributes.className : ''} 
         className= {className+' section_advantages text-center'}
         preventClick={true}
@@ -63,7 +63,7 @@ registerBlockType('gutenberg-advantages/advantages', {
     </Fragment>
   ),
   save: ({ attributes, className }) => (
-    <section ib='section_advantages'
+    <section id='section_advantages'
       additionalClasses={attributes.className ? attributes.className : ''}
       className= {className+' section_advantages text-center'}
     >
