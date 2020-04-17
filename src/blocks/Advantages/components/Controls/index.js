@@ -21,30 +21,40 @@ const Controls = ({ attributes, setAttributes }) => {
     if(str === 'false') {return false}
   }
 
-  const getCheckboxControl = (label, help, attribute) => (
+  const getCheckboxControl = (label, help, attribute, twoObject) => (
     <PanelRow>
       <CheckboxControl
         label={label}
         help={help}
-        checked={attributes[attribute]}
-        onChange={e => setAttributes({ [attribute]: !attributes[attribute] })}
-      />
-    </PanelRow>
-  )
-  const getRadioControl = (label, help, options, attribute, boolean ) => (
-    <PanelRow>
-      <RadioControl
-        label={label}
-        help={help}
-        selected={ attributes[attribute] }
-        options={options}
+        checked={
+          twoObject
+            ? attributes[twoObject][attribute]
+            : attributes[attribute]
+        }
         onChange={ val => {
-          boolean
-            ? setAttributes({ [attribute]: stringToBoolean(val) })
-            : setAttributes({ [attribute]: val })
+          twoObject
+            ? setAttributes({ [twoObject]: { ...attributes[twoObject], [attribute]: !attributes[twoObject][attribute]}})
+            : setAttributes({ [attribute]: !attributes[attribute] })
         } }
       />
     </PanelRow>
+  )
+  const getRadioControl = (label, help, options, attribute, twoObject ) => (
+    <RadioControl
+      label={label}
+      help={help}
+      selected={
+        twoObject
+          ? attributes[twoObject][attribute]
+          : attributes[attribute]
+      }
+      options={options}
+      onChange={ val => {
+        twoObject
+          ? setAttributes({ [twoObject]: {...attributes[twoObject],[attribute]: val}})
+          : setAttributes({ [attribute]: val })
+      } }
+    />
   )
 
   const getImgToState = (attribute, objectAttribute, objectAttribute2 ) => (
@@ -120,12 +130,12 @@ const Controls = ({ attributes, setAttributes }) => {
         {attributes.imgAndIcon === 'IMG'
           ? getImgToState('sectionImg', 'advantagesItems', 'section'+e)
           : getTextToStateTwoObject(
-            <span>Advantages Icon: {
+            <span>Advantages Icon(Пример: 'fa fa-address-book'): {
               (attributes.advantagesItems['section'+e] && attributes.advantagesItems['section'+e]['advantagesIcon']
-                ? <span className={'dashicons dashicons-' + attributes.advantagesItems['section'+e]['advantagesIcon']}></span>
-                : <span> не введено</span>
+                ? <spam><i class={attributes.advantagesItems['section'+e]['advantagesIcon']} aria-hidden="true"></i> ({attributes.advantagesItems['section'+e]['advantagesIcon']})</spam>
+                : <span>не введено</span>
               )
-            }</span>, <a target="_blank" href='https://developer.wordpress.org/resource/dashicons/'>Icon</a>, 'advantagesIcon', 'advantagesItems', 'section'+e)
+            }</span>, <a target="_blank" href='https://fontawesome.com/icons?d=gallery'>Icon</a>, 'advantagesIcon', 'advantagesItems', 'section'+e)
         }
       </PanelRow>
       <PanelRow>

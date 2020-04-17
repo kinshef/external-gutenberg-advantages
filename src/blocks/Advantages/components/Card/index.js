@@ -1,4 +1,5 @@
 import { Fragment } from "@wordpress/element";
+const { InnerBlocks } = wp.blockEditor
 
 
 const BootstrapContainer = ({ children, bootstrapGrid }) => {
@@ -42,7 +43,7 @@ const BuildSectionContent = ({ activeItem, advantagesItemString, type }) => {
 					</div>
 				case 'icon':
 					return <div className={i+'-wrap'}>
-						<span class={"dashicons dashicons-"+activeItem[i]}></span>
+						<i class={"fa-4x fa-fw "+activeItem[i]} aria-hidden="true"></i>
 					</div>
 				default:
 					return <div> Error </div>

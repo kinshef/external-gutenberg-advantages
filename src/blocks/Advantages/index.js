@@ -75,7 +75,7 @@ registerBlockType('gutenberg-advantages/advantages', {
         </Card.BootstrapRow>
         {Object.keys(attributes.advantagesItems).length
           ? <Card.BootstrapRow bootstrapGrid={attributes.bootstrapGrid}>
-              <Card.BuildSectionCol advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
+              <Card.BuildSectionCol imgAndIcon={attributes.imgAndIcon} advantagesItems={attributes.advantagesItems} maxColToRow={attributes.maxColToRow} />
             </Card.BootstrapRow>
           : <div>Заполните хотя-бы одну секцию</div>}
       </Card.BootstrapContainer>
