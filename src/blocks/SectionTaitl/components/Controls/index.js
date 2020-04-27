@@ -123,7 +123,7 @@ const Controls = ({ attributes, setAttributes, className}) => {
             onChange={e => setAttributes({'textTaitl': e})}
           />
         </PanelRow>
-        {getCheckboxControl('текст снизу', null, 'innerBlock')}
+        {/* {getCheckboxControl('текст снизу', null, 'innerBlock')} */}
       </PanelBody>
       <PanelBody title={__('Импорт шрифтов(Google)')} initialOpen={true}>
         {getTextToState('font family Url: '+ attributes.fontFamily.fontFamilyUrl,

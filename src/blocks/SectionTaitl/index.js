@@ -60,10 +60,10 @@ registerBlockType('gutenberg-advantages/section-taitl', {
         validation: true,
       },
     },
-    innerBlock: {
-      type: 'boolean',
-      default: false,
-    },
+    // innerBlock: {
+    //   type: 'boolean',
+    //   default: false,
+    // },
     padding: {
       type: 'object',
       default: {
@@ -84,7 +84,7 @@ registerBlockType('gutenberg-advantages/section-taitl', {
     },
     textAlign: {
       type: 'string',
-      default:  'left',
+      default:  'center',
     },
   },
   edit: ({ attributes, setAttributes, className}) => (
@@ -107,9 +107,11 @@ registerBlockType('gutenberg-advantages/section-taitl', {
           display={attributes.display}
           fontFamily={attributes.fontFamily}
         />
-        {attributes.innerBlock
-          ? <InnerBlocks />
-          : null}
+        {/* {attributes.innerBlock
+          ? <InnerBlocks
+              templateLock={false}
+            />
+          : null} */}
       </div>
     </Fragment>
   ),
@@ -131,9 +133,9 @@ registerBlockType('gutenberg-advantages/section-taitl', {
         display={attributes.display}
         fontFamily={attributes.fontFamily}
       />
-      {attributes.innerBlock
+      {/* {attributes.innerBlock
         ? <InnerBlocks.Content />
-        : null}
+        : null} */}
     </div>
   ),
 })
